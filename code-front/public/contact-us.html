@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Contact-Us Page</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        padding-top: 56px; /* Adjust according to your navigation bar height */
+      }
+
+      @media (min-width: 992px) {
+        body {
+          padding-top: 70px; /* Adjust according to your navigation bar height */
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <a class="navbar-brand" href="#">Your Logo</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/admin">Admin</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="container-fluid text-center mt-5">
+      <h1>Welcome to Contact-Us Page</h1>
+      <p>A short description of your website goes here.</p>
+    </header>
+
+    <!-- Main Content -->
+    <section class="container">
+      <div class="d-flex h-80 align-items-center justify-content-center">
+        <div class="col-6 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+          <div class="col-12 bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
+            <div class="d-flex justify-content-center text-white mb-5">
+              <h2>Contact-Us</h2>
+            </div>
+
+            <form>
+              <div class="form-floating mb-3">
+                <input
+                  class="form-control"
+                  type="text"
+                  name="fullName"
+                  id="fullName"
+                  placeholder="Full Name"
+                />
+              </div>
+
+              <div class="form-floating mb-3">
+                <input
+                  class="form-control"
+                  type="text"
+                  name="email"
+                  id="email"
+                  placeholder="Email Address"
+                />
+              </div>
+              <div class="form-floating mb-3">
+                <textarea
+                  rows="5"
+                  class="form-control"
+                  type="text"
+                  name="textarea"
+                  id="textarea"
+                  placeholder="Enter your Message Here"
+                ></textarea>
+              </div>
+
+              <button
+                class="btn btn-primary py-3 w-100 mb-4"
+                type="button"
+                id="formSubmit"
+                onclick="sendMessage()"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="container-fluid text-center mt-5">
+      <p>&copy; 2024 Your Website. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+      // this is my function in FRONT
+      function sendMessage() {
+        const myfullName = document.getElementById("fullName").value;
+        const myemail = document.getElementById("email").value;
+        const mytextArea = document.getElementById("textarea").value;
+
+        const msgDetail = {
+          fullName: myfullName,
+          email: myemail,
+          message: mytextArea,
+        };
+
+        // console.log(msgDetail);
+        fetch("http://localhost:5000/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(msgDetail),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.code == "success") {
+              console.log("Success:", data.messageDB);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    </script>
+  </body>
+</html>
